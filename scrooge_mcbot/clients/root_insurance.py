@@ -26,3 +26,18 @@ def get_gadget_quote(module_data):
     quote = insurance.Quotes(client)
     quote = quote.create(module_data)
     return quote
+
+
+def cancel_policy(policy_id, reason):
+    client = insurance.Client()
+    client.policies.cancel(policy_id, reason)
+
+
+def create_application(policyholder_id, quote_id, amount, serial_number):
+    client = insurance.Client()
+    return client.applications.create(policyholder_id, quote_id, amount, serial_number)
+
+
+def issue_policy(application_id):
+    client = insurance.Client()
+    return client.policies.issue(application_id)
