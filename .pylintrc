@@ -1,0 +1,10 @@
+[MESSAGES CONTROL]
+
+# Disable the message, report, category or checker with the given id(s).
+
+# List of things to ignore (add as many as you like)
+#	invalid-name        -- pylint doesn't like variables to be single letters
+#   unused-argument     -- we don't care about extra arguments in functions
+#   too-many-ancestors  -- class inheritance related
+
+disable=invalid-name, unused-argument, too-many-ancestors

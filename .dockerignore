@@ -1,0 +1,9 @@
+.git/
+*.egg
+.tox
+.vscode
+*.pyc
+.DS_Store
+.cache
+**/__pycache__/**
+**/__pycache__

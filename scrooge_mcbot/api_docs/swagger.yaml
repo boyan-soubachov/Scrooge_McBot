@@ -10,66 +10,43 @@ tags:
   description: "Some information about your first tag"
 - name: "tag2"
   description: "Some other information about your second tag"
+- name: "dialogflow"
+  description: "The endpoint to deal with dialogflow JSON"
 schemes:
 - "https"
 paths:
-  /:
-    get:
-      tags:
-      - "tag1"
-      summary: "Get a hello message"
-      description: "Gets a simple hello message, independent of any input"
-      operationId: "home"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      responses:
-        "200":
-          description: "OK"
-          schema:
-            type: string
-            example: "Helloooo"
-        "405":
-          description: "Invalid input"
-  /home_post:
+  /df:
     post:
       tags:
-      - "tag2"
-      summary: "Echo a hello message"
-      description: "Echoes a message with a hello greeting added to it"
-      operationId: "home_post"
+      - "dialogflow"
+      summary: "Process information from DialogFlow"
+      description: "Parses and responds to JSON posted from dialogflow"
+      operationId: "dialogflow"
+      consumes:
+      - "application/json"
       produces:
       - "application/json"
       parameters:
       - in: "body"
         name: "body"
-        description: "A simple text message in the body"
+        description: "JSON structure from dialogflow"
         required: true
         schema:
-          $ref: "#/definitions/SimpleMessage"
+          type: "object"
       responses:
         "200":
-          description: "successful operation"
+          description: "OK"
           schema:
-            $ref: "#/definitions/EchoedMessage"
-        "201":
-          description: "record created"
-          schema:
-            $ref: "#/definitions/EchoedMessage"
-        "400":
-          description: "Invalid status value"
+            $ref: '#/definitions/DialogflowResponse'
+        "405":
+          description: "Invalid input"
 definitions:
-  SimpleMessage:
-    type: "string"
-  EchoedMessage:
+  DialogflowResponse:
     type: "object"
     required:
-    - "message"
-    - "random_number"
+    - "displayText"
     properties:
-      message:
+      displayText:
         type: "string"
-      random_number:
-        type: "integer"
-        format: "int32"
+      speech:
+        type: "string"
