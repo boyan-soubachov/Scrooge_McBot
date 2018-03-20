@@ -10,6 +10,7 @@ from scrooge_mcbot.controllers import dialogflow_controller
 
 LOGGER = logging.getLogger()
 
+
 @view_config(route_name='dialogflow', renderer='json')
 def dialogflow_view(request):
     """
@@ -17,7 +18,8 @@ def dialogflow_view(request):
     """
     request_body = request.swagger_data['body']
     action = request_body['result']['action']
-    displayText, speech = getattr(dialogflow_controller, action)()
+    displayText, speech = getattr(dialogflow_controller, action)(6801015800084)
+    LOGGER.info('request: %s', action)
     output = {
         "displayText": displayText,
         "speech": speech
