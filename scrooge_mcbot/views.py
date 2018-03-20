@@ -18,12 +18,18 @@ def dialogflow_view(request):
     """
     request_body = request.swagger_data['body']
     action = request_body['result']['action']
-    displayText, speech = getattr(dialogflow_controller, action)(6801015800084)
+    speech, displayText, followupEvent = getattr(dialogflow_controller, action)(request_body)
     LOGGER.info('request: %s', action)
     output = {
         "displayText": displayText,
-        "speech": speech
+        "speech": speech,
     }
+
+    if followupEvent:
+        output["followupEvent"] = followupEvent
+
+    LOGGER.info("response: %s", output)
+
     resp = pyramid_response.Response(json_body=output)
     resp.status_code = 200
     return resp

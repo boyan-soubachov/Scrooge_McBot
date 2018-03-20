@@ -4,6 +4,7 @@ A controller module containing the business logic for any 'hello' endpoints.
 import logging
 import scrooge_mcbot.clients as clients
 import scrooge_mcbot.models as models
+from scrooge_mcbot.utils.controller_utils import valid_id
 
 LOGGER = logging.getLogger()
 
@@ -28,8 +29,17 @@ def _apply_savings(replacements):
         new_policies.append(new_policy)
     return new_policies
 
+def get_sa_id(request_body):
+    id_number = request_body['result']['resolvedQuery']
+    if not valid_id(id_number):
+        response = ('ID is not valid. Please try again.')
+        followupEvent = {
+            "followupEvent": {
+                "name": "get_sa_id",
+            }
+        }
+        return response, response, followupEvent
 
-def find_out_savings(id_number):
     potential_savings = 0.0
     potential_quotes = []
     # Get policyholder ID from id number
@@ -75,8 +85,22 @@ def find_out_savings(id_number):
                 'quote': cheapest_quote
             })
 
-    if len(potential_quotes) > 0:
-        _apply_savings(potential_quotes)
+    # if len(potential_quotes) > 0:
+    #     _apply_savings(potential_quotes)
 
     response = 'We can save you R{}!'.format(potential_savings / 100)
-    return response, response
+    speech_response = 'We can save you {} rand!'.format(potential_savings / 100)
+    return response, speech_response, None
+
+def find_out_savings(request_body):
+    """
+    This is a simple controller endpoint.
+
+    Returns:
+        A simple, constant string message
+    """
+    response = ('You can save so much money with Scrooge McBot\n'
+                'Please enter your South African ID number')
+    speech_response = 'speech response'
+    LOGGER.info('Simple endpoint hit, response: %s', response)
+    return response, speech_response, None
