@@ -1,0 +1,3 @@
+graft scrooge_mcbot/app_settings
+graft scrooge_mcbot/api_docs
+graft scrooge_mcbot/bin

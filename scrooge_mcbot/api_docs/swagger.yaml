@@ -1,0 +1,75 @@
+swagger: "2.0"
+info:
+  description: "This is a sample Swagger file for defining our API interface."
+  version: "1.0.0"
+  title: "Scrooge McBot"
+host: "scrooge.mcbot.io"
+basePath: "/"
+tags:
+- name: "tag1"
+  description: "Some information about your first tag"
+- name: "tag2"
+  description: "Some other information about your second tag"
+schemes:
+- "https"
+paths:
+  /:
+    get:
+      tags:
+      - "tag1"
+      summary: "Get a hello message"
+      description: "Gets a simple hello message, independent of any input"
+      operationId: "home"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: string
+            example: "Helloooo"
+        "405":
+          description: "Invalid input"
+  /home_post:
+    post:
+      tags:
+      - "tag2"
+      summary: "Echo a hello message"
+      description: "Echoes a message with a hello greeting added to it"
+      operationId: "home_post"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "A simple text message in the body"
+        required: true
+        schema:
+          $ref: "#/definitions/SimpleMessage"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/EchoedMessage"
+        "201":
+          description: "record created"
+          schema:
+            $ref: "#/definitions/EchoedMessage"
+        "400":
+          description: "Invalid status value"
+definitions:
+  SimpleMessage:
+    type: "string"
+  EchoedMessage:
+    type: "object"
+    required:
+    - "message"
+    - "random_number"
+    properties:
+      message:
+        type: "string"
+      random_number:
+        type: "integer"
+        format: "int32"
