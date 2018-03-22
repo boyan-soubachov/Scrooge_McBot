@@ -90,7 +90,7 @@ def get_sa_id(request_body):
 
     response = 'We can save you R{}!'.format(potential_savings / 100)
     speech_response = 'We can save you {} rand!'.format(potential_savings / 100)
-    return response, speech_response, None
+    return response, response, None
 
 def find_out_savings(request_body):
     """
@@ -99,8 +99,6 @@ def find_out_savings(request_body):
     Returns:
         A simple, constant string message
     """
-    response = ('You can save so much money with Scrooge McBot\n'
-                'Please enter your South African ID number')
-    speech_response = 'speech response'
+    response = ('What is your ID number?')
     LOGGER.info('Simple endpoint hit, response: %s', response)
-    return response, speech_response, None
+    return response, response, None

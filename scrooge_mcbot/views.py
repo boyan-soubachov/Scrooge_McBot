@@ -18,7 +18,7 @@ def dialogflow_view(request):
     """
     request_body = request.swagger_data['body']
     action = request_body['result']['action']
-    speech, displayText, followupEvent = getattr(dialogflow_controller, action)(request_body)
+    displayText, speech, followupEvent = getattr(dialogflow_controller, action)(request_body)
     LOGGER.info('request: %s', action)
     output = {
         "displayText": displayText,
